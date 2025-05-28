@@ -24,5 +24,3 @@ data class MessageContent(
     val type: String,
     val text: String
 )
-
-data class ApiKey(val value: String)
