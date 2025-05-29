@@ -24,17 +24,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             GptTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
                     MainScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding),
                         viewModel = viewModel
                     )
-
                 }
             }
         }
     }
 }
-

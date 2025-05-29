@@ -7,5 +7,5 @@ import retrofit2.http.POST
 
 interface AiService {
     @POST("/v1/responses")
-    suspend fun getResponse(@Body request: ChatRequest): ChatResponse
+    suspend fun sendChatPrompt(@Body request: ChatRequest): ChatResponse
 }

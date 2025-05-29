@@ -8,7 +8,7 @@ class AiRepository @Inject constructor(
     private val aiService: AiService
 ) {
 
-    suspend fun getResponse(request: ChatRequest): ChatResponse {
-        return aiService.getResponse(request)
+    suspend fun sendChatPrompt(request: ChatRequest): ChatResponse {
+        return aiService.sendChatPrompt(request)
     }
 }

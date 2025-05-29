@@ -5,8 +5,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
+
 
 }
 
@@ -43,6 +44,7 @@ android {
         }
         debug {
             buildConfigField("String", "API_KEY", localProperties.getProperty("API_KEY"))
+            buildConfigField("String", "BASE_URL", "\"https://api.openai.com\"")
         }
     }
     compileOptions {
@@ -61,15 +63,15 @@ android {
 
 dependencies {
 
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation (libs.okhttp)
+    implementation(libs.okhttp)
 
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.androidx.hilt.compiler)
-    implementation(libs.google.hilt)
-    kapt(libs.google.hilt.compiler)
+
 
     implementation(libs.moshi.kotlin)
     implementation(libs.moshi)
