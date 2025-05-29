@@ -2,7 +2,7 @@ package com.example.gpt.data.network.models
 
 data class ChatRequest(
     val model: String,
-    val input: String
+    val input: List<Message>
 )
 
 data class Message(
@@ -24,5 +24,3 @@ data class MessageContent(
     val type: String,
     val text: String
 )
-
-data class ApiKey(val value: String)
