@@ -1,7 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
+
+
 }
 
 android {
@@ -18,6 +25,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    val localProperties = Properties()
+    val localPropertiesFile = File(rootDir, "secret.properties")
+    if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
+        localPropertiesFile.inputStream().use {
+            localProperties.load(it)
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -25,6 +40,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+        }
+        debug {
+            buildConfigField("String", "API_KEY", localProperties.getProperty("API_KEY"))
+            buildConfigField("String", "BASE_URL", "\"https://api.openai.com\"")
         }
     }
     compileOptions {
@@ -36,10 +56,32 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+        resValues = true
     }
 }
 
 dependencies {
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+
+
+
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi)
+    implementation(libs.converter.moshi)
+
+    implementation(libs.logging.interceptor)
+    implementation(libs.coil.compose)
+
+    implementation(libs.kotlinx.serialization.json)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
